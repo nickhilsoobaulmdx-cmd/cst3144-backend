@@ -89,6 +89,9 @@ app.put("/lessons/:_id", async function(request, response) {
             $set: request.body
         };
         let result = await collection.updateOne(query, updates);
+                if (result.matchedCount === 0) {
+            return response.status(404).send("Lesson not found");
+        }
         response.send(result);
     } catch (err) {
         response.status(500).send("Error updating lesson");
