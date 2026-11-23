@@ -68,6 +68,9 @@ app.get('/lessons', async function(request, response) {
 app.post("/orders", async function(request, response){
     try {
         var body = request.body;
+                if (!body.name || !body.phone) {
+            return response.status(400).send("Name and phone are required");
+        }
         console.log(body);
         let collection = await db.collection("orders");
         let result = await collection.insertOne(body);
