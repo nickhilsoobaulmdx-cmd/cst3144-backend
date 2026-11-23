@@ -66,11 +66,15 @@ app.get('/lessons', async function(request, response) {
 
 // POST: save a new order
 app.post("/orders", async function(request, response){
-    var body = request.body;
-    console.log(body);
-    let collection = await db.collection("orders");
-    let result = await collection.insertOne(body);
-    response.send(result);
+    try {
+        var body = request.body;
+        console.log(body);
+        let collection = await db.collection("orders");
+        let result = await collection.insertOne(body);
+        response.send(result);
+    } catch (err) {
+        response.status(500).send("Error saving order");
+    }
 });
 
 // PUT: update any attribute of a lesson (e.g. spaces)
