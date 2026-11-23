@@ -99,6 +99,17 @@ app.put("/lessons/:_id", async function(request, response) {
 });
 
 // Any other address
+// GET: all orders
+app.get('/orders', async function(request, response) {
+    try {
+        let collection = await db.collection("orders");
+        let results = await collection.find({}).toArray();
+        response.send(results);
+    } catch (err) {
+        response.status(500).send("Error getting orders");
+    }
+});
+
 app.use((req, res) => {
     res.status(404).send("Page not found !")
 });
