@@ -82,13 +82,17 @@ app.post("/orders", async function(request, response){
 
 // PUT: update any attribute of a lesson (e.g. spaces)
 app.put("/lessons/:_id", async function(request, response) {
-    let collection = await db.collection("lessons");
-    const query = { _id: new ObjectId(request.params._id) };
-    const updates = {
-        $set: request.body
-    };
-    let result = await collection.updateOne(query, updates);
-    response.send(result);
+    try {
+        let collection = await db.collection("lessons");
+        const query = { _id: new ObjectId(request.params._id) };
+        const updates = {
+            $set: request.body
+        };
+        let result = await collection.updateOne(query, updates);
+        response.send(result);
+    } catch (err) {
+        response.status(500).send("Error updating lesson");
+    }
 });
 
 // Any other address
