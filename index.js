@@ -47,7 +47,12 @@ app.use('/images', (req, res) => {
     res.status(404).send("Image not found !");
 });
 
-// GET: all lessons
+// 
+// GET: home page message
+app.get('/', function(request, response) {
+    response.send("Welcome to the After School Lessons API. Try /lessons");
+});
+
 app.get('/lessons', async function(request, response) {
     let collection = await db.collection("lessons");
     let results = await collection.find({}).toArray();
