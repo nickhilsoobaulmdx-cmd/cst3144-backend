@@ -53,10 +53,15 @@ app.get('/', function(request, response) {
     response.send("Welcome to the After School Lessons API. Try /lessons");
 });
 
+// GET: all lessons
 app.get('/lessons', async function(request, response) {
-    let collection = await db.collection("lessons");
-    let results = await collection.find({}).toArray();
-    response.send(results);
+    try {
+        let collection = await db.collection("lessons");
+        let results = await collection.find({}).toArray();
+        response.send(results);
+    } catch (err) {
+        response.status(500).send("Error getting lessons");
+    }
 });
 
 // POST: save a new order
