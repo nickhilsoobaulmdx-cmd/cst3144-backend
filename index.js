@@ -98,7 +98,7 @@ app.put("/lessons/:_id", async function(request, response) {
     }
 });
 
-// Any other address
+
 // GET: all orders
 app.get('/orders', async function(request, response) {
     try {
@@ -110,6 +110,17 @@ app.get('/orders', async function(request, response) {
     }
 });
 
+// GET: one lesson by its _id
+app.get('/lessons/:_id', async function(request, response) {
+    try {
+        let collection = await db.collection("lessons");
+        let lesson = await collection.findOne({ _id: new ObjectId(request.params._id) });
+        response.send(lesson);
+    } catch (err) {
+        response.status(500).send("Error getting lesson");
+    }
+});
+// Any other address
 app.use((req, res) => {
     res.status(404).send("Page not found !")
 });
